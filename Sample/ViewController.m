@@ -16,7 +16,7 @@
 #import "BlurbNode.h"
 #import "KittenNode.h"
 
-static const NSInteger kLitterSize = 20;
+static const NSInteger kLitterSize = 2;
 
 
 @interface ViewController () <ASTableViewDataSource, ASTableViewDelegate>
@@ -48,15 +48,28 @@ static const NSInteger kLitterSize = 20;
   // populate our "data source" with some random kittens
   NSMutableArray *kittenDataSource = [NSMutableArray arrayWithCapacity:kLitterSize];
   for (NSInteger i = 0; i < kLitterSize; i++) {
-    u_int32_t deltaX = arc4random_uniform(10) - 5;
-    u_int32_t deltaY = arc4random_uniform(10) - 5;
-    CGSize size = CGSizeMake(350 + 2 * deltaX, 350 + 4 * deltaY);
-
-    [kittenDataSource addObject:[NSValue valueWithCGSize:size]];
+    [kittenDataSource addObject:self.kittenSizeFactory];
   }
   _kittenDataSource = kittenDataSource;
 
+  // Append a kitten after 1 sec
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+    NSMutableArray* array = _kittenDataSource.mutableCopy;
+    [array addObject:self.kittenSizeFactory];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_kittenDataSource.count + 1  inSection:0];
+    _kittenDataSource = array;
+    [_tableView appendNodesWithIndexPaths:@[indexPath]];
+  });
+
   return self;
+}
+
+- (NSValue*)kittenSizeFactory
+{
+    u_int32_t deltaX = arc4random_uniform(10) - 5;
+    u_int32_t deltaY = arc4random_uniform(10) - 5;
+    CGSize size = CGSizeMake(350 + 2 * deltaX, 350 + 4 * deltaY);
+    return [NSValue valueWithCGSize:size];
 }
 
 - (void)viewDidLoad
