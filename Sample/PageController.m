@@ -13,9 +13,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.vc1 = [ViewController new];
-    self.vc2 = [ViewController new];
-    self.vc3 = [ViewController new];
+    self.vc1 = [[ViewController alloc] initWithIdentifier:@"1"];
+    self.vc2 = [[ViewController alloc] initWithIdentifier:@"2"];
+    self.vc3 = [[ViewController alloc] initWithIdentifier:@"3"];
     
     _pageController = [[UIPageViewController alloc]
             initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll

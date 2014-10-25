@@ -16,4 +16,6 @@
  */
 @interface BlurbNode : ASCellNode
 
+- (instancetype)initWithIdentifier:(NSString*)viewControllerIdentifier;
+
 @end

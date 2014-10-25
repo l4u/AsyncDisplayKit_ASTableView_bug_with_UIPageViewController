@@ -25,6 +25,7 @@ static const NSInteger kLitterSize = 2;
 
   // array of boxed CGSizes corresponding to placekitten kittens
   NSArray *_kittenDataSource;
+    NSString* _viewControllerIdentifier;
 }
 
 @end
@@ -35,12 +36,12 @@ static const NSInteger kLitterSize = 2;
 #pragma mark -
 #pragma mark UIViewController.
 
-- (instancetype)init
+- (instancetype)initWithIdentifier:(NSString*)viewControllerIdentifier
 {
   if (!(self = [super init]))
     return nil;
-    NSLog(@"init");
 
+  _viewControllerIdentifier = viewControllerIdentifier;
   _tableView = [[ASTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
   _tableView.separatorStyle = UITableViewCellSeparatorStyleNone; // KittenNode has its own separator
   _tableView.asyncDataSource = self;
@@ -100,7 +101,7 @@ static const NSInteger kLitterSize = 2;
 {
   // special-case the first row
   if (indexPath.section == 0 && indexPath.row == 0) {
-    BlurbNode *node = [[BlurbNode alloc] init];
+    BlurbNode *node = [[BlurbNode alloc] initWithIdentifier:_viewControllerIdentifier];
     return node;
   }
 

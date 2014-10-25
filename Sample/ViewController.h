@@ -13,4 +13,6 @@
 
 @interface ViewController : UIViewController
 
+- (instancetype)initWithIdentifier:(NSString*)viewControllerIdentifier;
+
 @end
