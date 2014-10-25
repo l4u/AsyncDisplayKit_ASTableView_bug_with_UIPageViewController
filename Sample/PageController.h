@@ -9,4 +9,7 @@
 
 @interface PageController : UIViewController <UIPageViewControllerDelegate, UIPageViewControllerDataSource>
 @property(nonatomic, strong) UIPageViewController* pageController;
+@property(nonatomic, strong) UIViewController* vc1;
+@property(nonatomic, strong) UIViewController* vc2;
+@property(nonatomic, strong) UIViewController* vc3;
 @end

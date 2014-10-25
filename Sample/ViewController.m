@@ -39,6 +39,7 @@ static const NSInteger kLitterSize = 2;
 {
   if (!(self = [super init]))
     return nil;
+    NSLog(@"init");
 
   _tableView = [[ASTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
   _tableView.separatorStyle = UITableViewCellSeparatorStyleNone; // KittenNode has its own separator
@@ -54,11 +55,13 @@ static const NSInteger kLitterSize = 2;
 
   // Append a kitten after 1 sec
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-    NSMutableArray* array = _kittenDataSource.mutableCopy;
-    [array addObject:self.kittenSizeFactory];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_kittenDataSource.count + 1  inSection:0];
-    _kittenDataSource = array;
-    [_tableView appendNodesWithIndexPaths:@[indexPath]];
+      if (_kittenDataSource) {
+          NSMutableArray* array = _kittenDataSource.mutableCopy;
+          [array addObject:self.kittenSizeFactory];
+          NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_kittenDataSource.count + 1  inSection:0];
+          _kittenDataSource = array;
+          [_tableView appendNodesWithIndexPaths:@[indexPath]];
+      }
   });
 
   return self;
@@ -116,6 +119,10 @@ static const NSInteger kLitterSize = 2;
 {
   // disable row selection
   return NO;
+}
+
+- (void)dealloc{
+    NSLog(@"dealloc");
 }
 
 @end
